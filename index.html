@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Python Quiz (100 Questions)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #ffffff0f;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #ffd700;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 5px 0;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #283e51;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    .options button:hover {
+      background-color: #3c5c78;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+    }
+    .options button.wrong {
+      background-color: #dc3545 !important;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .result span {
+      font-weight: bold;
+      color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <div id="landing" style="text-align:center; padding: 50px;">
+    <h1 style="font-size: 2.5rem; color: #ffd700;">Welcome to Python Quiz Game</h1>
+    <p style="font-size: 1.2rem; color: #eee;">Test your Python knowledge with 100 questions in 30 minutes!</p>
+    <button onclick="startQuiz()" style="padding: 15px 30px; font-size: 18px; background: #00b894; color: white; border: none; border-radius: 10px; cursor: pointer;">▶️ Play Quiz Game</button>
+  </div>
+
+  <div class="container" style="display:none;" id="quiz-box">
+    <h1>🐍 Python Quiz — 100 Questions</h1>
+    <div id="quiz-container"></div>
+    <div class="result" id="result"></div>
+<div class="result" id="timer" style="margin-top: 10px;"></div>
+  </div>
+  <script>
+    const questions = [{"q": "What's a good name for a variable storing user age?", "options": ["123age", "user_age", "class", "x"], "answer": "user_age"}, {"q": "What keyword returns a value?", "options": ["exit", "return", "pass", "send"], "answer": "return"}, {"q": "What type is returned by input()?", "options": ["int", "str", "float", "bool"], "answer": "str"}, {"q": "Which condition checks if two values are equal?", "options": ["x = y", "x == y", "x === y", "x != y"], "answer": "x == y"}, {"q": "Which keyword is used to define a function?", "options": ["func", "define", "def", "function"], "answer": "def"}, {"q": "How do you access 2nd item in list x = [1,2,3]?", "options": ["x[1]", "x(2)", "x[2]", "x{2}"], "answer": "x[1]"}, {"q": "Which of the following is a valid variable name?", "options": ["1name", "name_1", "class", "first-name"], "answer": "name_1"}, {"q": "Which variable name is invalid?", "options": ["_value", "myVar", "def", "user_name"], "answer": "def"}, {"q": "How to add item to list?", "options": ["x.add(4)", "x.append(4)", "x.push(4)", "add(x, 4)"], "answer": "x.append(4)"}, {"q": "Which operator is used for floor division?", "options": ["/", "//", "%", "**"], "answer": "//"}, {"q": "What will this return: len('abc')?", "options": ["1", "2", "3", "4"], "answer": "3"}, {"q": "Which operator is used for floor division?", "options": ["/", "//", "%", "**"], "answer": "//"}, {"q": "Which condition checks if two values are equal?", "options": ["x = y", "x == y", "x === y", "x != y"], "answer": "x == y"}, {"q": "Which type is mutable?", "options": ["tuple", "int", "list", "str"], "answer": "list"}, {"q": "Can a variable name start with a number in Python?", "options": ["Yes", "No"], "answer": "No"}, {"q": "What is the correct way to call a function?", "options": ["call func()", "func()", "func", "run func()"], "answer": "func()"}, {"q": "What is the correct way to comment?", "options": ["# comment", "// comment", "<!-- comment -->", "/* comment */"], "answer": "# comment"}, {"q": "Which one is a logical operator?", "options": ["then", "and", "do", "var"], "answer": "and"}, {"q": "Which one is a dictionary?", "options": ["[1,2,3]", "(1,2)", "{'a':1}", "'abc'"], "answer": "{'a':1}"}, {"q": "Which loop is used when you know how many times to repeat?", "options": ["while", "for", "loop", "if"], "answer": "for"}, {"q": "Can a variable name start with a number in Python?", "options": ["Yes", "No"], "answer": "No"}, {"q": "How to add item to list?", "options": ["x.add(4)", "x.append(4)", "x.push(4)", "add(x, 4)"], "answer": "x.append(4)"}, {"q": "What will 'print('Hi)' do?", "options": ["Hi", "Error", "Nothing", "hi"], "answer": "Error"}, {"q": "Which one checks inequality?", "options": ["==", "!=", "=", "!=="], "answer": "!="}, {"q": "Which loop is used when you know how many times to repeat?", "options": ["while", "for", "loop", "if"], "answer": "for"}, {"q": "Which operator is used for exponentiation?", "options": ["^", "**", "//", "%"], "answer": "**"}, {"q": "What does x.pop() do?", "options": ["Deletes list", "Adds item", "Removes last item", "Sorts list"], "answer": "Removes last item"}, {"q": "What will this return: len('abc')?", "options": ["1", "2", "3", "4"], "answer": "3"}, {"q": "How do you access 2nd item in list x = [1,2,3]?", "options": ["x[1]", "x(2)", "x[2]", "x{2}"], "answer": "x[1]"}, {"q": "What is the result of 4 % 2?", "options": ["0", "1", "2", "Error"], "answer": "0"}, {"q": "What type is returned by input()?", "options": ["int", "str", "float", "bool"], "answer": "str"}, {"q": "What data type is the result of: type('Hello')?", "options": ["int", "str", "bool", "float"], "answer": "str"}, {"q": "What keyword returns a value?", "options": ["exit", "return", "pass", "send"], "answer": "return"}, {"q": "Which one is a dictionary?", "options": ["[1,2,3]", "(1,2)", "{'a':1}", "'abc'"], "answer": "{'a':1}"}, {"q": "Which keyword ends a loop early?", "options": ["stop", "exit", "break", "continue"], "answer": "break"}, {"q": "What is the result of 3 == 3.0?", "options": ["True", "False", "Error", "None"], "answer": "True"}, {"q": "What is the correct way to comment?", "options": ["# comment", "// comment", "<!-- comment -->", "/* comment */"], "answer": "# comment"}, {"q": "Which one is a Python keyword?", "options": ["value", "lambda", "data", "num1"], "answer": "lambda"}, {"q": "What is a default return value of a function if not specified?", "options": ["None", "0", "''", "False"], "answer": "None"}, {"q": "Which of the following is a list?", "options": ["{'a': 1}", "(1, 2)", "[1, 2, 3]", "'123'"], "answer": "[1, 2, 3]"}, {"q": "What keyword starts a condition?", "options": ["check", "if", "when", "for"], "answer": "if"}, {"q": "Which keyword ends a loop early?", "options": ["stop", "exit", "break", "continue"], "answer": "break"}, {"q": "Which one checks inequality?", "options": ["==", "!=", "=", "!=="], "answer": "!="}, {"q": "How many times will 'for i in range(3)' run?", "options": ["1", "2", "3", "4"], "answer": "3"}, {"q": "Which loop runs while a condition is true?", "options": ["for", "while", "loop", "if"], "answer": "while"}, {"q": "How many times will 'for i in range(3)' run?", "options": ["1", "2", "3", "4"], "answer": "3"}, {"q": "Which defines a function with parameters?", "options": ["def f(x):", "function f(x)", "f(x) =", "define f(x)"], "answer": "def f(x):"}, {"q": "Which one is a logical operator?", "options": ["then", "and", "do", "var"], "answer": "and"}, {"q": "Which of the following is a valid variable name?", "options": ["1name", "name_1", "class", "first-name"], "answer": "name_1"}, {"q": "Which causes an error?", "options": ["x = 5", "5 = x", "x == 5", "print(x)"], "answer": "5 = x"}, {"q": "Which causes an error?", "options": ["x = 5", "5 = x", "x == 5", "print(x)"], "answer": "5 = x"}, {"q": "Which defines a function with parameters?", "options": ["def f(x):", "function f(x)", "f(x) =", "define f(x)"], "answer": "def f(x):"}, {"q": "What is the result of 3 == 3.0?", "options": ["True", "False", "Error", "None"], "answer": "True"}, {"q": "What keyword starts a condition?", "options": ["check", "if", "when", "for"], "answer": "if"}, {"q": "What is a default return value of a function if not specified?", "options": ["None", "0", "''", "False"], "answer": "None"}, {"q": "How to access value from dict d = {'a':10}?", "options": ["d[10]", "d('a')", "d['a']", "d.a"], "answer": "d['a']"}, {"q": "Which variable name is invalid?", "options": ["_value", "myVar", "def", "user_name"], "answer": "def"}, {"q": "What data type is the result of: type('Hello')?", "options": ["int", "str", "bool", "float"], "answer": "str"}, {"q": "What is the result of 4 % 2?", "options": ["0", "1", "2", "Error"], "answer": "0"}, {"q": "What will 'print('Hi)' do?", "options": ["Hi", "Error", "Nothing", "hi"], "answer": "Error"}, {"q": "Which loop runs while a condition is true?", "options": ["for", "while", "loop", "if"], "answer": "while"}, {"q": "Which type is mutable?", "options": ["tuple", "int", "list", "str"], "answer": "list"}, {"q": "How to access value from dict d = {'a':10}?", "options": ["d[10]", "d('a')", "d['a']", "d.a"], "answer": "d['a']"}, {"q": "Which of the following is a list?", "options": ["{'a': 1}", "(1, 2)", "[1, 2, 3]", "'123'"], "answer": "[1, 2, 3]"}, {"q": "Which keyword handles exceptions?", "options": ["catch", "handle", "except", "onError"], "answer": "except"}, {"q": "Which keyword is optional in conditions?", "options": ["if", "elif", "else", "then"], "answer": "else"}, {"q": "What is the correct way to call a function?", "options": ["call func()", "func()", "func", "run func()"], "answer": "func()"}, {"q": "Which creates a list?", "options": ["list = {}", "list = []", "list = ()", "list = <>"], "answer": "list = []"}, {"q": "Which keyword handles exceptions?", "options": ["catch", "handle", "except", "onError"], "answer": "except"}, {"q": "Which one is a Python keyword?", "options": ["value", "lambda", "data", "num1"], "answer": "lambda"}, {"q": "What's a good name for a variable storing user age?", "options": ["123age", "user_age", "class", "x"], "answer": "user_age"}, {"q": "Which is correct syntax?", "options": ["if x = 5:", "if x == 5", "if(x==5)", "if x == 5:"], "answer": "if x == 5:"}, {"q": "Which creates a list?", "options": ["list = {}", "list = []", "list = ()", "list = <>"], "answer": "list = []"}, {"q": "Which is correct syntax?", "options": ["if x = 5:", "if x == 5", "if(x==5)", "if x == 5:"], "answer": "if x == 5:"}, {"q": "Which operator is used for exponentiation?", "options": ["^", "**", "//", "%"], "answer": "**"}, {"q": "Which keyword is optional in conditions?", "options": ["if", "elif", "else", "then"], "answer": "else"}, {"q": "Which keyword is used to define a function?", "options": ["func", "define", "def", "function"], "answer": "def"}, {"q": "What keyword is used to skip an iteration?", "options": ["skip", "continue", "pass", "next"], "answer": "continue"}, {"q": "What does x.pop() do?", "options": ["Deletes list", "Adds item", "Removes last item", "Sorts list"], "answer": "Removes last item"}, {"q": "What keyword is used to skip an iteration?", "options": ["skip", "continue", "pass", "next"], "answer": "continue"}];
+
+    let currentQuestion = 0;
+let timerInterval;
+let totalTime = 30 * 60;
+    let score = 0;
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      const container = document.getElementById("quiz-container");
+      container.innerHTML = `
+        <div class="question">
+          <h2>Q${currentQuestion + 1}. ${q.q}</h2>
+          <div class="options">
+            ${q.options.map(opt => `<button onclick="checkAnswer(this, '${opt.replace(/'/g, "\'")}')">${opt}</button>`).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function checkAnswer(button, selected) {
+      const q = questions[currentQuestion];
+      const buttons = document.querySelectorAll(".options button");
+
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent === q.answer) btn.classList.add("correct");
+        if (btn.textContent === selected && btn.textContent !== q.answer)
+          btn.classList.add("wrong");
+      });
+
+      if (selected === q.answer) {
+        score++;
+      }
+
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          
+    function startQuiz() {
+      document.getElementById("landing").style.display = "none";
+      document.getElementById("quiz-box").style.display = "block";
+      showQuestion();
+      startTimer();
+    }
+
+    function startTimer() {
+      const timerElement = document.getElementById("timer");
+      timerInterval = setInterval(() => {
+        const minutes = Math.floor(totalTime / 60);
+        const seconds = totalTime % 60;
+        timerElement.textContent = `⏳ Time Left: ${minutes}m ${seconds}s`;
+        totalTime--;
+
+        if (totalTime < 0) {
+          clearInterval(timerInterval);
+          document.getElementById("quiz-container").innerHTML = '';
+          timerElement.innerHTML = '';
+          playEnd();
+          document.getElementById("result").innerHTML = `⏰ Time's up!<br> You scored <span>${score} / ${questions.length}</span>`;
+        }
+      }, 1000);
+    }
+
+    showQuestion();
+
+        } else {
+    playWrong();
+          document.getElementById("quiz-container").innerHTML = '';
+          document.getElementById("result").innerHTML = `🎉 You scored <span>${score} / ${questions.length}</span>`;
+        }
+      }, 1000);
+    }
+
+    
+    function startQuiz() {
+      document.getElementById("landing").style.display = "none";
+      document.getElementById("quiz-box").style.display = "block";
+      showQuestion();
+      startTimer();
+    }
+
+    function startTimer() {
+      const timerElement = document.getElementById("timer");
+      timerInterval = setInterval(() => {
+        const minutes = Math.floor(totalTime / 60);
+        const seconds = totalTime % 60;
+        timerElement.textContent = `⏳ Time Left: ${minutes}m ${seconds}s`;
+        totalTime--;
+
+        if (totalTime < 0) {
+          clearInterval(timerInterval);
+          document.getElementById("quiz-container").innerHTML = '';
+          timerElement.innerHTML = '';
+          playEnd();
+          document.getElementById("result").innerHTML = `⏰ Time's up!<br> You scored <span>${score} / ${questions.length}</span>`;
+        }
+      }, 1000);
+    }
+
+    showQuestion();
+
+  </script>
+
+<audio id="correctSound" src="data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA..."></audio>
+<audio id="wrongSound" src="data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA..."></audio>
+<audio id="endSound" src="data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA..."></audio>
+
+<script>
+  function playCorrect() {
+    document.getElementById("correctSound").play();
+  }
+
+  function playWrong() {
+    document.getElementById("wrongSound").play();
+  }
+
+  function playEnd() {
+    document.getElementById("endSound").play();
+  }
+</script>
+</body>
+
+</html>
